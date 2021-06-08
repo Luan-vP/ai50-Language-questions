@@ -1,5 +1,6 @@
 import nltk
 nltk.download('punkt')
+import string
 import sys
 import os
 
@@ -70,8 +71,17 @@ def tokenize(document):
     punctuation or English stopwords.
     """
     tokens = nltk.tokenize.word_tokenize(document)
-    print(tokens)
-    raise NotImplementedError
+
+    filtered_tokens = []
+    for token in tokens:
+
+      if token.isalpha() and token not in string.punctuation:
+        filtered_tokens.append(token.lower())
+    print(filtered_tokens)
+
+    # TODO remove full stops and check for numbers
+    # also less strict filter
+    return(filtered_tokens)
 
 
 def compute_idfs(documents):
