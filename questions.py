@@ -1,4 +1,5 @@
 import nltk
+nltk.download('punkt')
 import sys
 import os
 
@@ -57,7 +58,7 @@ def load_files(directory):
         with open(os.path.join(directory,file)) as f:
           data[file] = f.read()
 
-    print(data)
+    return data
 
 
 def tokenize(document):
@@ -68,6 +69,8 @@ def tokenize(document):
     Process document by coverting all words to lowercase, and removing any
     punctuation or English stopwords.
     """
+    tokens = nltk.tokenize.word_tokenize(document)
+    print(tokens)
     raise NotImplementedError
 
 
