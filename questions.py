@@ -2,8 +2,11 @@ import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
 import string
+import math
 import sys
 import os
+from collections import Counter
+
 
 FILE_MATCHES = 1
 SENTENCE_MATCHES = 1
@@ -101,6 +104,45 @@ def compute_idfs(documents):
     Any word that appears in at least one of the documents should be in the
     resulting dictionary.
     """
+    total_documents = len(documents.keys())
+
+    print(total_documents)
+
+    test_word = "find"
+
+    idfs = {}
+
+    appears_in = {}
+
+    counters = {}
+
+    # Want to do this for each word in each document
+    
+    for document in documents.keys():
+      counters[document] = Counter(documents[document])
+
+      print(counters[document])
+
+    # Now we have a counter for word frequency for each document
+      
+    # for document in documents.keys():
+    #   for counter in counters:
+    #     print(counter)
+    #     for word in counter:
+    #       try:
+    #         if document not in appears_in[word]:
+    #           appears_in[word].append(document) 
+    #       except KeyError:
+    #         appears_in[word] = [document]
+
+    # print(appears_in)
+
+
+    for word in appears_in.keys():
+      num_documents_containing_word = len(appears_in[word]) 
+      idfs[word] = math.log(total_documents / num_documents_containing_word) 
+
+
     raise NotImplementedError
 
 
