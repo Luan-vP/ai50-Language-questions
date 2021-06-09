@@ -81,6 +81,8 @@ def tokenize(document):
     # Catch repeated characters
     for char in string.punctuation:
       filter_string += char * 5
+
+    filter_string += "'s'"
     
     filtered_tokens = []
     for token in tokens:
