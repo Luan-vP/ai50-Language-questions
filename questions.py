@@ -1,5 +1,6 @@
 import nltk
 nltk.download('punkt')
+nltk.download('stopwords')
 import string
 import sys
 import os
@@ -75,8 +76,15 @@ def tokenize(document):
     filtered_tokens = []
     for token in tokens:
 
-      if token.isalpha() and token not in string.punctuation:
+      if token in string.punctuation or token*2 in string.punctuation or token*3 in string.punctuation:
+        # catch puncutation and repeated characters
+        print('caught')
+        continue
+      if token in nltk.corpus.stopwords.words("english"):
+        continue
+      else:
         filtered_tokens.append(token.lower())
+
     print(filtered_tokens)
 
     # TODO remove full stops and check for numbers
