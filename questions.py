@@ -56,7 +56,6 @@ def load_files(directory):
     `.txt` file inside that directory to the file's contents as a string.
     """
     for _,_,filenames in os.walk(directory):
-      print(filenames)
 
       data = {}
       for file in filenames:
@@ -132,23 +131,19 @@ def compute_idfs(documents):
         except KeyError:
           appears_in[word] = [document]
 
-    print(appears_in)
-
     # TODO: appears_in is not accurately counting
 
-    print(appears_in['the'])
-
-    for word in appears_in: 
-      if len(appears_in[word]) >4:
-        print(word)
 
 
     for word in appears_in:
       num_documents_containing_word = len(appears_in[word]) 
       idfs[word] = math.log(total_documents / num_documents_containing_word) 
 
-    print(idfs)
-    print(idfs['the'])
+    # testing
+    for word in appears_in: 
+      if len(appears_in[word]) >3:
+        print(word)
+        print(idfs[word])
 
     # IDF should be a value from 0 up to 1.79
 
