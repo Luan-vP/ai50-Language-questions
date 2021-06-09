@@ -82,7 +82,7 @@ def tokenize(document):
     for char in string.punctuation:
       filter_string += char * 5
 
-    filter_string += "'s'"
+    filter_string += "'s"
     
     filtered_tokens = []
     for token in tokens:
@@ -110,8 +110,6 @@ def compute_idfs(documents):
 
     print(total_documents)
 
-    test_word = "find"
-
     idfs = {}
 
     appears_in = {}
@@ -123,27 +121,36 @@ def compute_idfs(documents):
     for document in documents.keys():
       counters[document] = Counter(documents[document])
 
-      print(counters[document])
+      # print(counters[document])
 
     # Now we have a counter for word frequency for each document
       
-    # for document in documents.keys():
-    #   for counter in counters:
-    #     print(counter)
-    #     for word in counter:
-    #       try:
-    #         if document not in appears_in[word]:
-    #           appears_in[word].append(document) 
-    #       except KeyError:
-    #         appears_in[word] = [document]
+    for document, counter in counters.items():
+      for word in counter:
+        try:
+          appears_in[word].append(document) 
+        except KeyError:
+          appears_in[word] = [document]
 
-    # print(appears_in)
+    print(appears_in)
+
+    # TODO: appears_in is not accurately counting
+
+    print(appears_in['the'])
+
+    for word in appears_in: 
+      if len(appears_in[word]) >4:
+        print(word)
 
 
-    for word in appears_in.keys():
+    for word in appears_in:
       num_documents_containing_word = len(appears_in[word]) 
       idfs[word] = math.log(total_documents / num_documents_containing_word) 
 
+    print(idfs)
+    print(idfs['the'])
+
+    # IDF should be a value from 0 up to 1.79
 
     raise NotImplementedError
 
