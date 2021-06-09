@@ -145,9 +145,7 @@ def compute_idfs(documents):
         print(word)
         print(idfs[word])
 
-    # IDF should be a value from 0 up to 1.79
-
-    raise NotImplementedError
+    return idfs
 
 
 def top_files(query, files, idfs, n):
