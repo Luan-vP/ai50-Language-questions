@@ -73,14 +73,21 @@ def tokenize(document):
     """
     tokens = nltk.tokenize.word_tokenize(document)
 
+    filter_string = string.punctuation
+
+    # Catch repeated characters
+    for char in string.punctuation:
+      filter_string += char * 5
+    
     filtered_tokens = []
     for token in tokens:
 
-      if token in string.punctuation or token*2 in string.punctuation or token*3 in string.punctuation:
+      if token in filter_string:
         # catch puncutation and repeated characters
-        print('caught')
+        
         continue
       if token in nltk.corpus.stopwords.words("english"):
+        print('caught!')
         continue
       else:
         filtered_tokens.append(token.lower())
