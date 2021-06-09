@@ -115,15 +115,13 @@ def compute_idfs(documents):
 
     counters = {}
 
-    # Want to do this for each word in each document
     
     for document in documents.keys():
       counters[document] = Counter(documents[document])
 
-      # print(counters[document])
-
     # Now we have a counter for word frequency for each document
       
+
     for document, counter in counters.items():
       for word in counter:
         try:
@@ -131,19 +129,11 @@ def compute_idfs(documents):
         except KeyError:
           appears_in[word] = [document]
 
-    # TODO: appears_in is not accurately counting
-
-
 
     for word in appears_in:
       num_documents_containing_word = len(appears_in[word]) 
       idfs[word] = math.log(total_documents / num_documents_containing_word) 
 
-    # testing
-    for word in appears_in: 
-      if len(appears_in[word]) >3:
-        print(word)
-        print(idfs[word])
 
     return idfs
 
