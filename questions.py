@@ -84,18 +84,12 @@ def tokenize(document):
 
       if token in filter_string:
         # catch puncutation and repeated characters
-        
         continue
       if token in nltk.corpus.stopwords.words("english"):
-        print('caught!')
         continue
       else:
         filtered_tokens.append(token.lower())
 
-    print(filtered_tokens)
-
-    # TODO remove full stops and check for numbers
-    # also less strict filter
     return(filtered_tokens)
 
 
