@@ -86,6 +86,8 @@ def tokenize(document):
     filtered_tokens = []
     for token in tokens:
 
+      # TODO: 'the' is still getting through
+
       if token in filter_string:
         # catch puncutation and repeated characters
         continue
@@ -118,6 +120,7 @@ def compute_idfs(documents):
     
     for document in documents.keys():
       counters[document] = Counter(documents[document])
+      print(counters[document])
 
     # Now we have a counter for word frequency for each document
       
@@ -145,10 +148,46 @@ def top_files(query, files, idfs, n):
     to their IDF values), return a list of the filenames of the the `n` top
     files that match the query, ranked according to tf-idf.
     """
+    print(query)
+    print(nltk.corpus.stopwords.words("english"))
 
     counters = {}
     for file in files:
       counters[file] = Counter(files[file])
+
+    
+    tf_idf_sums = {}
+
+    
+    for file in files:
+      print(file)
+      tf_idf_sums[file] = 0
+
+      for word in query:
+        
+
+        if word not in files[file]:
+          continue
+        else:
+          print(word)
+          tf = counters[file][word]
+          idf = idfs[word]
+          tf_idf = tf * idf
+          print(tf_idf)
+          tf_idf_sums[file] += tf_idf
+
+    tf_idf_list = list(tf_idf_sums.items())
+
+    print(tf_idf_list)
+
+    tf_idf_list = sorted(tf_idf_list, key=lambda x: x[1], reverse=True)
+    print(tf_idf_list)
+
+    to_return = [pair[0] for pair in tf_idf_list[0:n]]
+    print(to_return)
+
+    return [pair[0] for pair in tf_idf_list[0:n]]
+
 
 
 
