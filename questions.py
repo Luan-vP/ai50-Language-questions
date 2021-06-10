@@ -145,6 +145,22 @@ def top_files(query, files, idfs, n):
     to their IDF values), return a list of the filenames of the the `n` top
     files that match the query, ranked according to tf-idf.
     """
+
+    counters = {}
+    for file in files:
+      counters[file] = Counter(files[file])
+
+
+
+    
+
+
+    # The returned list of filenames should be of length n and should be ordered with the best match first.
+
+    # Recall that tf-idf for a term is computed by multiplying the number of times the term appears in the document by the IDF value for that term.
+
+    # Files should be ranked according to the sum of tf-idf values for any word in the query that also appears in the file. 
+    # Words in the query that do not appear in the file should not contribute to the file’s score.
     raise NotImplementedError
 
 
