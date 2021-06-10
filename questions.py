@@ -59,7 +59,7 @@ def load_files(directory):
 
       data = {}
       for file in filenames:
-        with open(os.path.join(directory,file)) as f:
+        with open(os.path.join(directory,file), encoding="utf8") as f:
           data[file] = f.read()
 
     return data
