@@ -178,15 +178,11 @@ def top_files(query, files, idfs, n):
 
     tf_idf_list = list(tf_idf_sums.items())
 
-    print(tf_idf_list)
-
     tf_idf_list = sorted(tf_idf_list, key=lambda x: x[1], reverse=True)
-    print(tf_idf_list)
 
     to_return = [pair[0] for pair in tf_idf_list[0:n]]
-    print(to_return)
 
-    return [pair[0] for pair in tf_idf_list[0:n]]
+    return to_return
 
 
 def top_sentences(query, sentences, idfs, n):
