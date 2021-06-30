@@ -5,6 +5,7 @@ import string
 import math
 import sys
 import os
+import operator
 from collections import Counter
 
 
@@ -121,11 +122,9 @@ def compute_idfs(documents):
     
     for document in documents.keys():
       counters[document] = Counter(documents[document])
-      print(counters[document])
 
     # Now we have a counter for word frequency for each document
       
-
     for document, counter in counters.items():
       for word in counter:
         try:
@@ -195,22 +194,27 @@ def top_sentences(query, sentences, idfs, n):
     """
 
     matching_word_measures = {}
+    query_term_densities = {}
 
     for sentence in sentences.keys():
       # calculate matching word measure
       matching_word_measures[sentence] = 0
+      num_query_terms = 0
+
       for word in query:
         # sum the idf values for each appearing word
         if word in sentences[sentence]:
           matching_word_measures[sentence] += idfs[word]
+          num_query_terms += 1
 
       # calculate query term density
+      query_term_densities[sentence] = num_query_terms / len(sentences[sentence])
 
     # order and return
-    # TODO: list, not tuple
-    best_matched_sentences = sorted(matching_word_measures.items(), reverse=True, key= lambda item: item[1])[0:n]
 
-    return [item[0] for item in best_matched_sentences]
+    best_matched_sentences = sorted(sentences.keys(), key= lambda sentence: (matching_word_measures[sentence], query_term_densities[sentence]), reverse= True)
+
+    return best_matched_sentences[0:n]
 
 
 if __name__ == "__main__":
