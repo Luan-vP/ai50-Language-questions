@@ -9,7 +9,7 @@ from collections import Counter
 
 
 FILE_MATCHES = 1
-SENTENCE_MATCHES = 1
+SENTENCE_MATCHES = 5
 
 
 def main():
@@ -47,6 +47,7 @@ def main():
     # Determine top sentence matches
     matches = top_sentences(query, sentences, idfs, n=SENTENCE_MATCHES)
     for match in matches:
+        print("----This is the match-----")
         print(match)
 
 
@@ -149,7 +150,6 @@ def top_files(query, files, idfs, n):
     files that match the query, ranked according to tf-idf.
     """
     print(query)
-    print(nltk.corpus.stopwords.words("english"))
 
     counters = {}
     for file in files:
@@ -197,6 +197,31 @@ def top_sentences(query, sentences, idfs, n):
     the query, ranked according to idf. If there are ties, preference should
     be given to sentences that have a higher query term density.
     """
+
+    matching_word_measures = {}
+
+    for sentence in sentences.keys():
+      # calculate matching word measure
+      matching_word_measures[sentence] = 0
+      for word in query:
+        # sum the idf values for each appearing word
+        if word in sentences[sentence]:
+          matching_word_measures[sentence] += idfs[word]
+
+      # calculate query term density
+
+    # order and return
+    return(sorted(matching_word_measures.items(), reverse=True, key= lambda item: item[1])[0:n])
+
+    
+
+
+    # The top_sentences function should, given a query (a set of words), sentences (a dictionary mapping sentences to a list of their words), and idfs (a dictionary mapping words to their IDF values), return a list of the n top sentences that match the query, ranked according to IDF.
+    # for each sentence, sum the idfs for each word in the query
+    # then 
+# The returned list of sentences should be of length n and should be ordered with the best match first.
+# Sentences should be ranked according to “matching word measure”: namely, the sum of IDF values for any word in the query that also appears in the sentence. Note that term frequency should not be taken into account here, only inverse document frequency.
+# If two sentences have the same value according to the matching word measure, then sentences with a higher “query term density” should be preferred. Query term density is defined as the proportion of words in the sentence that are also words in the query. For example, if a sentence has 10 words, 3 of which are in the query, then the sentence’s query term density is 0.3.
     raise NotImplementedError
 
 
