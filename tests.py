@@ -18,11 +18,12 @@ class TestQuestions(unittest.TestCase):
         self.assertGreater(len(self.data['natural_language_processing.txt']), 0)
 
     def test_tokenize(self):
-        tokens = tokenize(self.data['natural_language_processing.txt'])
-        samples = random.sample(tokens, 5)
-        for sample in samples:
-            print(sample)
-            self.assertTrue(sample.islower())
+        tokens = tokenize(' '.join(list(self.data.values())))
+        samples = random.sample(tokens, 1000)
+        for stopword in nltk.corpus.stopwords.words("english"):
+            self.assertNotIn(stopword, tokens)
+        for punct in string.punctuation:
+            self.assertNotIn(punct, tokens)
     
 if __name__ == '__main__':
     unittest.main()

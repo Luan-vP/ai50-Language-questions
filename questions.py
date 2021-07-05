@@ -84,11 +84,12 @@ def tokenize(document):
       filter_string += char * 5
 
     filter_string += "'s"
+    filter_string += chr(8211)
     
     filtered_tokens = []
-    for token in tokens:
+    for token in map(str.lower, tokens):
 
-      # TODO: 'the' is still getting through
+      # TODO: '-' is still getting through
 
       if token in filter_string:
         # catch puncutation and repeated characters
@@ -96,7 +97,7 @@ def tokenize(document):
       if token in nltk.corpus.stopwords.words("english"):
         continue
       else:
-        filtered_tokens.append(token.lower())
+        filtered_tokens.append(token)
 
     return(filtered_tokens)
 
