@@ -2,6 +2,8 @@ import unittest
 import random
 from questions import *
 
+# test string: unanswered mind discovered solve creating time
+
 class TestQuestions(unittest.TestCase):
 
     data = {}
@@ -9,6 +11,10 @@ class TestQuestions(unittest.TestCase):
     def setUp(self):
         directory = './corpus/'
         self.data = load_files(directory)
+        self.documents = {}
+        for filename, text in self.data.items():
+            self.documents[filename] = tokenize(text)
+
 
     def test_load_files(self):
         # test keys of data dictiorary
@@ -24,6 +30,13 @@ class TestQuestions(unittest.TestCase):
             self.assertNotIn(stopword, tokens)
         for punct in string.punctuation:
             self.assertNotIn(punct, tokens)
+
+    def test_compute_idfs(self):
+        idfs = compute_idfs(self.documents)
+        tests = {'unanswered': 1.791759469228055, 'mind': 1.0986122886681098, 'discovered': 0.6931471805599453, 'solve': 0.4054651081081644, 'creating': 0.1823215567939546, 'time': 0.0}
+        for prompt, answer in tests.items():
+            self.assertAlmostEqual(idfs[prompt], answer)
+
     
 if __name__ == '__main__':
     unittest.main()

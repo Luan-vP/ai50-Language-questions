@@ -9,7 +9,7 @@ import operator
 from collections import Counter
 
 
-FILE_MATCHES = 1
+FILE_MATCHES = 3
 SENTENCE_MATCHES = 5
 
 
@@ -89,8 +89,6 @@ def tokenize(document):
     filtered_tokens = []
     for token in map(str.lower, tokens):
 
-      # TODO: '-' is still getting through
-
       if token in filter_string:
         # catch puncutation and repeated characters
         continue
@@ -111,8 +109,6 @@ def compute_idfs(documents):
     resulting dictionary.
     """
     total_documents = len(documents.keys())
-
-    print(total_documents)
 
     idfs = {}
 
@@ -173,6 +169,8 @@ def top_files(query, files, idfs, n):
           tf = counters[file][word]
           idf = idfs[word]
           tf_idf = tf * idf
+          print(tf)
+          print(idf)
           print(tf_idf)
           tf_idf_sums[file] += tf_idf
 
@@ -181,7 +179,7 @@ def top_files(query, files, idfs, n):
     tf_idf_list = sorted(tf_idf_list, key=lambda x: x[1], reverse=True)
 
     to_return = [pair[0] for pair in tf_idf_list[0:n]]
-
+    print(to_return)
     return to_return
 
 
